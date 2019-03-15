@@ -28,6 +28,8 @@ class Reader {
         //7 = # of >
 
     public:
+        //creates reader class type with string input
+        //input: string file name
         Reader(string fN) {
             fileName = fN;
             file = ifstream(fileName);
@@ -41,20 +43,20 @@ class Reader {
             }
         }
 
-        string GetFileName() {
+        //returns the file name
+        //output: string filename 
+        string getFileName() {
             return fileName;
         }
 
+        //sets the file name
+        //input: string file name
         void setFileName(string fn) {
             fileName = fn;
         }
 
-        /*
-        ifstream getFile() {
-            return file;
-        }
-        */
-
+        //sets the file name
+        //input: string file name
         void setFile(string fn) {
             file = ifstream(fn);
              if(file.fail()) {
@@ -62,6 +64,7 @@ class Reader {
             }
         }
 
+        //reads the file into stack, then closes file
         void setStack() {
             //loop through file and add parenthesis, brackets(curly and standard), and greater than/leass than
             char c;
@@ -72,34 +75,28 @@ class Reader {
             file.close();
         }
 
+        //throws errors when there is an uneven amount of syntax, or when there is stuff left in the stack
         void checkStack() {
             for(int i = 0; i<5; i+=2) {
-                cout << "got here" << endl;
                 if(numOfCharacters.at(i) != numOfCharacters.at(i+1)) {
                     throw logic_error("unbalanced syntax");
                 }
             }
 
-            //check the stack for stupid stuff
-            //[] should be close to each other
-            //should not be one bracket(curly or standard) within parthensis
-            //as long as > is contained by parathesis its fine
-            for(int i = 0; i<stac.size(); i++) {
-                //if()
-
+            if(stac.size() > 0) {
+                throw logic_error("unbalanced syntax");
             }
-            
-
-
-
             
         }
 
+        //pushes values onto stack that are open
+        //pops values off of stack when open matches close
+        //increments numOfCharacters whenever a char is found
         void addToVector(char c) {
             if(c == '(') {
                 stac.push(c);
                 numOfCharacters.at(0) = numOfCharacters.at(0) +=1;
-                cout << c;
+                
             } else if(c==')') {
                 if(stac.top() == '(') {
                     stac.pop();
@@ -107,12 +104,12 @@ class Reader {
                 } else {
                     stac.push(c);
                     numOfCharacters.at(1) = numOfCharacters.at(1) +=1;
-                    cout << c;
+                    
                 }
             }  else if(c=='{') {
                 stac.push(c);
                 numOfCharacters.at(2) = numOfCharacters.at(2) +=1;
-                cout << c;
+                
             }  else if(c=='}') {
                 if(stac.top() == '{') {
                     stac.pop();
@@ -120,12 +117,12 @@ class Reader {
                 } else {
                     stac.push(c);
                     numOfCharacters.at(3) = numOfCharacters.at(3) +=1;
-                    cout << c;
+                    
                 }
             }  else if(c=='[') {
                 stac.push(c);
                 numOfCharacters.at(4) = numOfCharacters.at(4) +=1;
-                cout << c;
+                
             }  else if(c==']') {
                 if(stac.top() == '[') {
                     stac.pop();
@@ -133,12 +130,14 @@ class Reader {
                 } else {
                     stac.push(c);
                     numOfCharacters.at(5) = numOfCharacters.at(5) +=1;
-                    cout << c;
+                    
                 }
-            }  else if(c=='<') {
+
+            //code for checking <> values
+            /*}  else if(c=='<') {
                 stac.push(c);
                 numOfCharacters.at(6) = numOfCharacters.at(6) +=1;
-                cout << c;
+                
             }  else if(c=='>') {
                 if(stac.top() == '<') {
                     stac.pop();
@@ -146,20 +145,21 @@ class Reader {
                 } else {
                     stac.push(c);
                     numOfCharacters.at(7) = numOfCharacters.at(7) +=1;
-                    cout << c;
+                    
                 }
-                
-                //cout << "me ur looking for" << endl;
+                */
             } 
+            
         }
 
+        //prints out the stack and clears it.
         void printStac() {
             while(stac.empty() == false) {
-                cout << stac.top() << endl;
+                cout << stac.top();
                 stac.pop();
             }
+            cout << endl;
         }
-
 
 };
 

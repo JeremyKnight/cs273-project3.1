@@ -29,9 +29,9 @@ List<Type>::List(const List<Type>& list) {
 
 
 template <typename Type>
-List<Type>::~List() {
+List<Type>::~List([) {
     while(this->size()!=0) {
-        this.pop_front();
+        this.pop_front(]);
     }
     static_assert(this->head==NULL && this->tail==NULL);
 }
@@ -59,6 +59,7 @@ void List<Type>::pop_back() {
     len--;
 }
 
+arr[]
 template <typename Type>
 void List<Type>::push_front(Type element) { 
     if (tail == NULL) {
